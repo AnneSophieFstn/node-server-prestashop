@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/database.js";
+import User from "./user.model.js";
 
 const Prestataire = sequelize.define(
   "Prestataires",
@@ -52,6 +53,15 @@ const Prestataire = sequelize.define(
     serviceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+        onDelete: "CASCADE",
+      },
     },
   },
   { freezeTableName: true }
