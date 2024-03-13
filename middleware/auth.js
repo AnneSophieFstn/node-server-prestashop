@@ -8,6 +8,8 @@ dotenv.config();
 const SECRET_KEY = process.env.ACCESS_TOKEN_SECRET;
 
 async function authentification(req, res) {
+  console.log(req.body);
+  console.log(req.query);
   const { email, password } = req.body;
 
   try {
@@ -24,7 +26,7 @@ async function authentification(req, res) {
 
       if (match) {
         const token = jwt.sign(
-          { userId: user.id, role: user.role },
+          { user: user, role: user.role },
           SECRET_KEY,
           {
             expiresIn: process.env.JWT_EXPIRE,
@@ -35,7 +37,7 @@ async function authentification(req, res) {
 
         return res
           .status(200)
-          .json({ token: token, message: "Vous êtes bien connecté" });
+          .json({ user: user, token: token, message: "Vous êtes bien connecté" });
       } else {
         return res
           .status(403)
@@ -89,21 +91,5 @@ function checkRolesToken(roles) {
   };
 }
 
-async function userLog(req, res) {
-  console.log(req.user.userId);
-  try {
-    const user = await UserModel.findByPk(req.user.userId);
-    if (user) {
-      return res.status(200).json({ user });
-    } else {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: error,
-    });
-  }
-}
 
-export { authentification, verifyToken, checkRolesToken, userLog };
+export { authentification, verifyToken, checkRolesToken };
