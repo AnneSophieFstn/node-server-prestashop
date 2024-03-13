@@ -6,12 +6,11 @@ import {
   getAllUsers,
   deleteUser,
 } from "../controller/user.controller.js";
-import { checkRolesToken, userLog, verifyToken } from "../middleware/auth.js";
+import { checkRolesToken, verifyToken } from "../middleware/auth.js";
 
 const UserRoutes = express.Router();
 
 UserRoutes.get("/users", getAllUsers);
-UserRoutes.get("/user", verifyToken, userLog);
 UserRoutes.post("/register", createUser);
 UserRoutes.get(
   "/users-not-activated",
