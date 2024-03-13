@@ -2,20 +2,24 @@ import PrestataireModel from "../model/prestataire.model.js";
 
 async function editPrestataire(req, res) {
   try {
+    console.log(req.body.data);
+    console.log(req.query);
+    console.log(req.params);
     const editPrestataire = await PrestataireModel.update(
       {
-        name: req.query.name,
-        phone: req.query.phone,
-        city: req.query.city,
-        description: req.query.description,
-        serviceId: req.query.serviceId,
+        name: req.body.data.name,
+        phone: req.body.data.phone,
+        city: req.body.data.city,
+        description: req.body.data.description,
+        serviceId: req.body.data.serviceId,
+        userId: req.params.id,
       },
       {
         where: { userId: req.params.id },
       }
     );
+    console.log("editPrestataire: ", editPrestataire);
 
-    console.log(editPrestataire);
     return res.status(200).json({ message: "Prestataire modifié avec succès" });
   } catch (error) {
     return res.status(500).json({
