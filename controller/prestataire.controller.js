@@ -1,10 +1,23 @@
 import PrestataireModel from "../model/prestataire.model.js";
+import User from "../model/user.model.js";
+
+PrestataireModel.belongsTo(User);
+
+async function createPrestataire(req, res) {
+  try {
+    const createPrestataire = await PrestataireModel.create({
+      userId: req.body.userId,
+    });
+    console.log("createPrestataire: ", createPrestataire);
+
+    return res.status(200).json({ message: "Prestataire ajouté avec succès" });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function editPrestataire(req, res) {
   try {
-    console.log(req.body.data);
-    console.log(req.query);
-    console.log(req.params);
     const editPrestataire = await PrestataireModel.update(
       {
         name: req.body.data.name,
@@ -41,7 +54,42 @@ async function getAllPrestataire(req, res) {
 
 async function getOnePrestataire(req, res) {
   try {
-    const prestataire = await PrestataireModel.findByPk(req.params.id);
+    const prestataire = await PrestataireModel.findOne({
+      attributes: [
+        "id",
+        "name",
+        "phone",
+        "city",
+        "description",
+        "serviceId",
+        "userId",
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ["id", "email"],
+        },
+      ],
+      where: { id: req.params.id },
+    });
+
+    if (!prestataire) {
+      return res.status(404).json({ message: "Ce prestataire n'existe pas" });
+    }
+
+    return res.status(200).json(prestataire);
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
+}
+
+async function getDataPrestataireLog(req, res) {
+  try {
+    const prestataire = await PrestataireModel.findOne({
+      where: { userId: req.params.userId },
+    });
 
     if (!prestataire) {
       return res.status(404).json({ message: "Ce prestataire n'existe pas" });
@@ -74,8 +122,10 @@ async function getPrestatairesByServices(req, res) {
 }
 
 export {
+  createPrestataire,
   editPrestataire,
   getAllPrestataire,
   getOnePrestataire,
+  getDataPrestataireLog,
   getPrestatairesByServices,
 };

@@ -12,7 +12,7 @@ const Prestataire = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           args: true,
@@ -22,7 +22,7 @@ const Prestataire = sequelize.define(
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           args: true,
@@ -32,7 +32,7 @@ const Prestataire = sequelize.define(
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           args: true,
@@ -42,7 +42,7 @@ const Prestataire = sequelize.define(
     },
     city: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           args: true,
@@ -52,7 +52,7 @@ const Prestataire = sequelize.define(
     },
     serviceId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
