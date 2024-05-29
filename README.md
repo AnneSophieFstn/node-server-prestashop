@@ -9,11 +9,11 @@ des prestataires.
 
 ### **Backend:**
 
-- NodeJs
+- [NodeJs - REPO GITHUB](https://github.com/AnneSophieFstn/node-server-prestashop) 
 
 ### **Frontend:**
 
-- React
+- [React - REPO GITHUB](https://github.com/AnneSophieFstn/prestashop)
 
 ## Fonctionnalités
 
